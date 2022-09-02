@@ -9,6 +9,8 @@ require_once 'commun/header.php';
             <a href="./ajout-patient.php" class="btn btn-primary mb-5">ENREGISTREMENT PATIENTS</a>
             <a href="./ajout-rendezvous.php" class="btn btn-primary mb-5">ENREGISTREMENT RENDEZ VOUS PATIENTS</a>
             <a href="./ajout-patient-rendez-vous.php" class="btn btn-primary mb-5">ENREGISTREMENT PATIENTS ET RENDEZ VOUS PATIENTS</a>
+            <a href="./liste-patients.php" class="btn btn-primary mb-5">LISTE DES PATIENTS</a>
+            <a href="./liste-rendezvous.php" class="btn btn-primary mb-5">LISTE DES RDV</a>
         </div>
     </section>
 </div>

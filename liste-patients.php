@@ -2,7 +2,7 @@
 require 'models/Db.php';
 require 'models/Patients.php';
 require_once 'commun/header.php';
-require_once 'controllers/patientsCtrl.php';
+require_once 'controllers/liste-patientCtrl.php';
 
 ?>
 <div class="mx-5 mt-5 px-3 bg-light">
@@ -27,42 +27,27 @@ require_once 'controllers/patientsCtrl.php';
     </form>
 
     <?php
-    if (is_array($showPatientsList)) { ?>
-        <h1 id="pagePatientsList" class="d-flex justify-content-center mt-5">LISTE DES PATIENTS</h1>
+    if (isset($showPatientsList)) { ?>
+        <h1 id="pagePatientsList" class="d-flex justify-content-center mt-5 mb-5">LISTE DES PATIENTS</h1>
         <section>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Prénom</th>
-                        <th>Nom</th>
-                        <th>Date de naissance</th>
-                        <th>Date d'anniversaire</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <select name="showPatientsList">
-                        <td>
-                            <option disabled selected value="">Patients</option>
-                        </td>
-                        <?php
-                        foreach ($showPatientsList as $showPatient) { ?>
-                            <td>
-                                <option value="<?= $showPatient->id ?>"><?= $showPatient->firstname ?><?= $showPatient->lastname ?></option>
-                            </td>
-                        <?php   }
-                        ?>
-                    </select>
-                    </tr>
-                </tbody>
-            </table>
+            <ul class="list-group list-group-horizontal mb-3">
+                <li class="list-group-item col-sm-4">Nom</li>
+                <li class="list-group-item col-sm-4">Prénom</li>
+                <li class="list-group-item col-sm-2">Date de Naissance</li>
+                <li class="list-group-item col-sm-2">Compte du patient</li>
+            </ul>
+            <?php foreach ($showPatientsList as $showPatient) { ?>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item col-sm-4"><?= $showPatient->lastname ?></li>
+                    <li class="list-group-item col-sm-4"><?= $showPatient->firstname ?></li>
+                    <li class="list-group-item col-sm-2"><?= $showPatient->birthdate ?></li>
+                    <li class="list-group-item col-sm-2">Identifiant: <a href="profil-patient.php?id=<?= $showPatient->id ?>"><?= $showPatient->id ?></a></li>
+                </ul>
+        <?php }
+        } ?>
         </section>
-    <?php } else { ?>
-        <p>Une erreur est survenue veuillez contacter le service informatique</p>
-    <?php }
-    ?>
-</div>
-</body>
+        <div class="text-center mb-4 mt-5">
+            <a href="./index.php" class="col align-self-center"><button class="btn btn-primary col-sm-7">Retour Index</button></a>
+        </div>
 
-</html>
+</div>

@@ -1,7 +1,6 @@
 <?php
 $regexLetter = "/^[a-zâêîôûäëïöüàèìòùé]{1,50}$/i";
 $regexPhone = "/^0[1-79][0-9]{8}$/";
-$regexBirthdate = "/^(19|20)[0-9]{2}\-(0[1-9])|(1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$/";
 //
 $errors = [];
 //
@@ -70,9 +69,9 @@ if (isset($_POST['dataFormValidPatients'])) {
     if (empty($errors)) {
         if (!$patient->isPatientExist()){
         $patient->createPatient();
+        header("Location: liste-patients.php");
         } else {
         $errors['patientRegister'] = 'Le patient existe déjà';
-       
         }
     }
 }
