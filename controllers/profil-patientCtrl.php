@@ -6,15 +6,40 @@ $errors = [];
 //
 $ok = [];
 $patient = new Patients;
+$appointments = new Appointments;
+
 // fonction pour afficher patient avec
 //condition vérification si l'URL envoyée contient bien une ID, une ID entier, une ID existante
-
-if (isset($_GET['id']) && (is_numeric($_GET['id'])) && ($patient->isIdTrue($_GET['id']))) {
-    $showPatientInformation = $patient->getPatientInfo($_GET['id']);
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+} elseif (isset($_GET['idDelete'])) {
+    $id = $_GET['idDelete'];
 } else {
-    ?><p>Contactez la DSI</p><?php
-    exit;
+    $id = $_GET['idDeleteConfirmation'];
 }
+
+
+if (isset($id) && (is_numeric($id)) && ($patient->isIdTrue($id))) {
+    $showPatientInformation = $patient->getPatientInfo($id);
+    $getAppointmentsListByOrderDateAndByIdPatients = $patient->getAppointmentsListByOrderDateAndByIdPatients($id);
+} 
+if (isset($_GET['idDelete']) && (is_numeric($_GET['idDelete'])) && ($patient->isIdTrue($_GET['idDelete']))) {
+    $idDelete = ($_GET['idDelete']);
+?>
+    <div class="card text-center w-25 mx-auto">
+        <div class="card-body">
+            <p class="card-text">LA SUPPRESSION DU PATIENT ENTRAINERA LA SUPPRESSION DE TOUS SES RDVS.</p>
+            <a href="profil-patient.php?idDeleteConfirmation=<?= $idDelete ?>" class="card-link btn btn-danger">Confirmez suppression</a>
+        </div>
+    </div>
+<?php }
+
+if (isset($_GET['idDeleteConfirmation'])) {
+    var_dump($_GET['idDeleteConfirmation']);
+    $appointments->deleteAppointmentByIdPatients($_GET['idDeleteConfirmation']);
+    $patient->deletePatient(($_GET['idDeleteConfirmation'])) ;
+    header("Location: patient-profil.php");
+    }
 
 // fonction pour modifier patient avec controller
 if (isset($_POST['dataFormValidUpdatePatients'])) {

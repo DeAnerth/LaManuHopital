@@ -103,6 +103,73 @@ class Patients extends Db
         $stmt->bindParam(':updateMail', $this->mail, PDO::PARAM_STR);
         $stmt->execute();
     }
+    public function deletePatient($id) {
+        $query = 'DELETE FROM `patients`  WHERE `id` = :id' ; 
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+    public function getAppointmentsListByOrderDateAndByIdPatients($id)
+    {
+        $query = 'SELECT `app`.`id`, `app`.`dateHour`, `app`.`idPatients`, `pat`.`id` FROM `patients` AS `pat` INNER JOIN `appointments` AS `app` ON `app`.`idPatients` = `pat`.`id` WHERE `pat`.`id` = :id ORDER BY `dateHour` DESC';
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function isAppointmentExistByPatient($idPatients)
+    {
+        $query = 'SELECT COUNT `app`.`idPatients` AS `number` FROM `appointments` WHERE `idPatients` = :idPatients';
+        //on demande à PDO de préparer la requete et de la stocker dans la variable $stmt (statement)
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':idPatients', $idPatients, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result->number;
+    }
+    public function searchPatient(string $searchPatient)
+    {
+        /**
+         * Création de la requête SQL
+         */
+        $query = 'SELECT `id`, `lastname`, `firstname`, `mail` FROM `patients` WHERE `lastname` LIKE :searchPatient';
+        $stmt = $this->pdo->prepare($query);
+        $searchPatient = '%'.$searchPatient.'%';
+        $stmt->bindParam(':searchPatient', $searchPatient, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
+    public function getPatientsListForPagination()
+    {
+        /**
+         * Création de la requête SQL
+         */
+        $query = 'SELECT `id`, `lastname`, `firstname`, `birthdate`, `phone`, `mail` FROM `patients` LIMIT 5, 5';
+
+        return $this->getQueryResult($query);
+    }
+    public function countPatientsList(): int
+    {
+        $query = 'SELECT COUNT(`id`) AS `number` FROM `patients`';
+        //on demande à PDO de préparer la requete et de la stocker dans la variable $stmt (statement)
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        //notre objectif retourner le nombre actuel de patients
+        return $result->number;
+    }
+    public function patientsListWithLimitAndOffsetForPagination($pageOffSet, $pageLimit)
+    {
+        $query = 'SELECT `id`, `lastname`, `firstname`, `birthdate`, `phone`, `mail` FROM `patients` ORDER BY `lastname` DESC LIMIT :pageOffSet, :pageLimit ';
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':pageLimit', $pageLimit, PDO::PARAM_INT);
+        $stmt->bindParam(':pageOffSet', $pageOffSet, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    }
 
     }
 

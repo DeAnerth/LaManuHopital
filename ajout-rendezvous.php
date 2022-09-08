@@ -6,6 +6,8 @@ require 'models/Patients.php';
 require_once 'commun/header.php';
 require_once 'controllers/liste-patientCtrl.php';
 require_once 'controllers/ajout-rendezvousCtrl.php';
+require 'config/functions.php';
+
 ?>
 <div class="mx-5 mt-5 px-3 bg-light">
     <h1 id="pageFormTitleAppointments" class="d-flex justify-content-center mt-5">CREER UN RENDEZ VOUS</h1>

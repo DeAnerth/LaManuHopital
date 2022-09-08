@@ -6,6 +6,7 @@ require 'models/Db.php';
 require 'models/Patients.php';
 require_once 'commun/header.php';
 require_once 'controllers/ajout-patientCtrl.php';
+require 'config/functions.php';
 
 
 
@@ -26,7 +27,7 @@ require_once 'controllers/ajout-patientCtrl.php';
             <div class="form-label row mb-3">
                 <label for="lastname" class="form-label col-sm-3">Nom</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="lastname">
+                    <input type="text" class="form-control" name="lastname" id="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : '' ?>" placeholder="lastname">
                     <span class="text-danger"><?= isset($errors['lastname']) ? $errors['lastname'] : '' ?></span>
                 </div>
             </div>
@@ -44,14 +45,14 @@ require_once 'controllers/ajout-patientCtrl.php';
             <div class="form-label row mb-3">
                 <label for="mail" class="form-label col-sm-3">Adresse courriel</label>
                 <div class="col-sm-9">
-                    <input type="mail" class="form-control" name="mail" id="mail" placeholder="name@example.com">
+                    <input type="mail" class="form-control" name="mail" id="mail" value="<?= isset($_POST['mail']) ? $_POST['mail'] : '' ?>" placeholder="name@example.com">
                     <span class="text-danger"><?= isset($errors['mail']) ? $errors['mail'] : '' ?></span>
                 </div>
             </div>
             <div class="form-label row mb-3">
                 <label for="phone" class="form-label col-sm-3">Numéro de téléphone</label>
                 <div class="col-sm-9">
-                    <input type="phone" class="form-control" name="phone" id="phone" placeholder="Format: 06 12 34 56 78 OU 02 34 56 78 91">
+                    <input type="phone" class="form-control" name="phone" id="phone" value="<?= isset($_POST['phone']) ? $_POST['phone'] : '' ?>" placeholder="Format: 06 12 34 56 78 OU 02 34 56 78 91">
                     <span class="text-danger"><?= isset($errors['phone']) ? $errors['phone'] : '' ?></span>
                 </div>
             </div>

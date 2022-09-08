@@ -1,7 +1,10 @@
 <?php
 require 'models/Db.php';
 require 'models/Patients.php';
+require 'models/Appointments.php';
+require_once 'config/functions.php';
 require_once 'controllers/profil-patientCtrl.php';
+require_once 'controllers/liste-rendezvousCtrl.php';
 require_once 'commun/header.php';
 ?>
 <h1 class="d-flex justify-content-center">INFORMATIONS PATIENT</h1>
@@ -72,7 +75,7 @@ require_once 'commun/header.php';
                 </form>
             <?php } ?>
             <div class="text-center mb-4">
-                <a href="profil-patient.php?id=<?= $showPatientInformation->id ?>" type="button " class="card-link btn btn-info col-sm-7 col align-self-center" name="deleteBtn">Supprimer Patient</a>
+                <a href="profil-patient.php?idDelete=<?= $showPatientInformation->id ?>" type="button " class="card-link btn btn-info col-sm-7 col align-self-center" name="deleteBtn">Supprimer Patient</a>
             </div>
             <div class="text-center mb-4">
                 <a href="./liste-patients.php" type="button" class="card-link btn btn-info col-sm-7 col align-self-center">Retour liste des patients</a>
@@ -81,5 +84,15 @@ require_once 'commun/header.php';
                 <a href="./liste-rendezvous.php" type="button" class="card-link btn btn-info col-sm-7 col align-self-center">Retour liste des RDV</a>
             </div>
         </div>
+        <div class="text-center mb-4">
+            <h5>LISTE DES RDVS</h5>
+            <?php foreach ($getAppointmentsListByOrderDateAndByIdPatients as $showAppointment) { ?>
+                <ul clas="list-group list-group-flush border-0 w-100 p-3">
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item col-sm-12"><?= changeDate($showAppointment->dateHour, 'Y-m-d H:i:s', 'd/m/Y H:i') ?></li>
+                    </ul>
+                </ul>
+            <?php }
+            ?>
+        </div>
     </div>
-</div>

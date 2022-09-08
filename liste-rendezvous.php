@@ -2,6 +2,7 @@
 require 'models/Db.php';
 require 'models/Appointments.php';
 require 'models/Patients.php';
+require 'config/functions.php';
 require_once 'commun/header.php';
 require_once 'controllers/liste-patientCtrl.php';
 require_once 'controllers/liste-rendezvousCtrl.php';
@@ -14,7 +15,8 @@ require_once 'controllers/liste-rendezvousCtrl.php';
             <li class="list-group-item col-sm-2">RDV</li>
             <li class="list-group-item col-sm-3">Nom</li>
             <li class="list-group-item col-sm-3">Prénom</li>
-            <li class="list-group-item col-sm-2">Compte du patient</li>
+            <li class="list-group-item col-sm-2">Infos du RDV N°</li>
+            <li class="list-group-item col-sm-2">Supprimer le RDV</li>
         </ul>
         <?php foreach ($showAppointmentsListByOrder as $showAppointment) { ?>
             <ul class="list-group list-group-horizontal">
@@ -23,7 +25,8 @@ require_once 'controllers/liste-rendezvousCtrl.php';
                 </li>
                 <li class="list-group-item col-sm-3"><?= $showAppointment->lastname ?></li>
                 <li class="list-group-item col-sm-3"><?= $showAppointment->firstname ?></li>
-                <li class="list-group-item col-sm-2"><a href="profil-patient.php?id=<?= $showAppointment->idPatients ?>"><?= $showAppointment->idPatients ?></a></li>
+                <li class="list-group-item col-sm-2"><a href="rendezvous.php?idAppointment=<?= $showAppointment->id ?>"><?= $showAppointment->id ?></a></li>
+                <li class="btn btn-danger list-group-item col-sm-2"><a href="liste-rendezvous.php?idDelete=<?= $showAppointment->id ?>">Supprimer</a></li>
             </ul>
     <?php }
     }
@@ -32,7 +35,7 @@ require_once 'controllers/liste-rendezvousCtrl.php';
         <a href="./liste-patients.php" type="button" class="card-link btn btn-info col-sm-7 col align-self-center">Retour liste des patients</a>
     </div>
     <div class="text-center mt-5 mb-4">
-        <a href="./rendezvous.php" type="button" class="card-link btn btn-info col-sm-7 col align-self-center">Rendez-vous Infos</a>
+    <a href="./index.php" type="button" class="card-link btn btn-info col-sm-7 col align-self-center">Index</a>
     </div>
 
     </section>
